@@ -65,7 +65,7 @@ citySearch.addEventListener("click", function(event){
     userInput = document.getElementById('userInput').value
     localStorage.setItem(parUserIn, userInput)
     pullFromLS()
-    fetch('http://api.openweathermap.org/geo/1.0/direct?q=' + userInput +' &limit=10&appid=' + ApiKey)
+    fetch('https://api.openweathermap.org/geo/1.0/direct?q=' + userInput +' &limit=10&appid=' + ApiKey)
     .then(res => res.json())
     .then(response => fetch('https://api.openweathermap.org/data/2.5/weather?lat=' + response[0].lat + '&lon=' + response[0].lon 
     + '&appid=' + ApiKey)
@@ -106,7 +106,7 @@ citySearch.addEventListener("click", function(event){
         cardDiv.setAttribute("class", "card")
         cardBodyDiv.setAttribute("class", "card-body")
         h3tag.setAttribute("id", "cityTimeIcon")
-        imgtag.setAttribute("src", "http://openweathermap.org/img/wn/" + icon + "@2x.png")
+        imgtag.setAttribute("src", "https://openweathermap.org/img/wn/" + icon + "@2x.png")
         imgtag.setAttribute("id", "iconImg")
         temperatureDiv.setAttribute("class", "row")
         temperatureDiv.setAttribute("id", "tempDiv")
@@ -153,7 +153,7 @@ citySearch.addEventListener("click", function(event){
         fiveDayForcast.appendChild(h4tag)
         h4tag.appendChild(document.createTextNode("5-Day Forcast:"))
 
-    }).then(fetch('http://api.openweathermap.org/data/2.5/forecast?lat=' + response[0].lat + '&lon=' + response[0].lon + '&appid=' + ApiKey)
+    }).then(fetch('s://api.openweathermap.org/data/2.5/forecast?lat=' + response[0].lat + '&lon=' + response[0].lon + '&appid=' + ApiKey)
     .then(res => res.json())
     .then(function(data){
         const weatherArrary = data.list
@@ -184,7 +184,7 @@ citySearch.addEventListener("click", function(event){
                 fiveCardBody.setAttribute("class", "card-body")
                 h5tag.setAttribute("class", "card-title")
                 iconDiv.setAttribute("class", "row")
-                imgtag.setAttribute("src", "http://openweathermap.org/img/wn/" + icon + "@2x.png")
+                imgtag.setAttribute("src", "https://openweathermap.org/img/wn/" + icon + "@2x.png")
                 imgtag.setAttribute("id", "fiveicon")
                 temperatureDiv.setAttribute("class", "row")
                 temperatureDiv.setAttribute("id", "temperatureDiv")
@@ -219,7 +219,7 @@ function returnTheDyn(savedCityNam){
     inputField.innerHTML = ""
     currentWeatherCard.innerHTML = ""
     fiveCardDiv.innerHTML = ""
-fetch('http://api.openweathermap.org/geo/1.0/direct?q=' + savedCityNam +' &limit=10&appid=' + ApiKey)
+fetch('https://api.openweathermap.org/geo/1.0/direct?q=' + savedCityNam +' &limit=10&appid=' + ApiKey)
     .then(res => res.json())
     .then(response => fetch('https://api.openweathermap.org/data/2.5/weather?lat=' + response[0].lat + '&lon=' + response[0].lon 
     + '&appid=' + ApiKey)
@@ -254,7 +254,7 @@ fetch('http://api.openweathermap.org/geo/1.0/direct?q=' + savedCityNam +' &limit
         cardDiv.setAttribute("class", "card")
         cardBodyDiv.setAttribute("class", "card-body")
         h3tag.setAttribute("id", "cityTimeIcon")
-        imgtag.setAttribute("src", "http://openweathermap.org/img/wn/" + icon + "@2x.png")
+        imgtag.setAttribute("src", "https://openweathermap.org/img/wn/" + icon + "@2x.png")
         imgtag.setAttribute("id", "iconImg")
         temperatureDiv.setAttribute("class", "row")
         temperatureDiv.setAttribute("id", "tempDiv")
@@ -302,7 +302,7 @@ fetch('http://api.openweathermap.org/geo/1.0/direct?q=' + savedCityNam +' &limit
         h4tag.appendChild(document.createTextNode("5-Day Forcast:"))
         
 
-    }).then(fetch('http://api.openweathermap.org/data/2.5/forecast?lat=' + response[0].lat + '&lon=' + response[0].lon + '&appid=' + ApiKey)
+    }).then(fetch('https://api.openweathermap.org/data/2.5/forecast?lat=' + response[0].lat + '&lon=' + response[0].lon + '&appid=' + ApiKey)
     .then(res => res.json())
     .then(function(data){
         const weatherArrary = data.list
@@ -333,7 +333,7 @@ fetch('http://api.openweathermap.org/geo/1.0/direct?q=' + savedCityNam +' &limit
                 fiveCardBody.setAttribute("class", "card-body")
                 h5tag.setAttribute("class", "card-title")
                 iconDiv.setAttribute("class", "row")
-                imgtag.setAttribute("src", "http://openweathermap.org/img/wn/" + icon + "@2x.png")
+                imgtag.setAttribute("src", "https://openweathermap.org/img/wn/" + icon + "@2x.png")
                 imgtag.setAttribute("id", "fiveicon")
                 temperatureDiv.setAttribute("class", "row")
                 temperatureDiv.setAttribute("id", "temperatureDiv")
@@ -359,7 +359,6 @@ fetch('http://api.openweathermap.org/geo/1.0/direct?q=' + savedCityNam +' &limit
     }))
     )
 }
-
 
 
 
