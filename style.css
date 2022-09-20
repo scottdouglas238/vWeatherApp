@@ -1,0 +1,66 @@
+#pageHeader {
+    background-color: rgb(71, 71, 71);
+}
+#weatherText{
+    color: white;
+    padding: 10px;
+}
+#inputDiv {
+    margin-left: 1px;
+}
+#iconImg{
+    height: 80px;
+    width: 80px;
+}
+#tempDiv{
+    padding-left: 14px;
+    margin-top: -17px;
+}
+#humDiv{
+    margin-top: 10px;
+}
+#windSpdDiv{
+    margin-top: 10px;
+}
+#pressDiv{
+    margin-top: 10px;
+    margin-left: -23px;
+}
+#cityTimeIcon{
+    margin-top: -10px;
+}
+#h4tag{
+    margin-top: 15px;
+}
+#fiveicon{
+    height: 60px;
+    width: 80px;
+}
+#temperatureDiv{
+    margin-left: 0px;
+}
+#humidityDiv5{
+   margin-top: 18px;
+}
+#lightCard{
+    padding-bottom: 40px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+#deleteButton{
+    float: right;
+    border-radius: 4px;
+    font-weight: bold;
+    line-height: normal;
+}
+#deleteButton:hover{
+    background-color: black;
+    color: white;
+}
+#deleteButton:focus{
+    background-color: white;
+    color: black;
+}
+.btn-outline-dark{
+    border-radius: 0 !important;
+}
