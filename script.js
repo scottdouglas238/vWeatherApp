@@ -153,7 +153,7 @@ citySearch.addEventListener("click", function(event){
         fiveDayForcast.appendChild(h4tag)
         h4tag.appendChild(document.createTextNode("5-Day Forcast:"))
 
-    }).then(fetch('s://api.openweathermap.org/data/2.5/forecast?lat=' + response[0].lat + '&lon=' + response[0].lon + '&appid=' + ApiKey)
+    }).then(fetch('https://api.openweathermap.org/data/2.5/forecast?lat=' + response[0].lat + '&lon=' + response[0].lon + '&appid=' + ApiKey)
     .then(res => res.json())
     .then(function(data){
         const weatherArrary = data.list
