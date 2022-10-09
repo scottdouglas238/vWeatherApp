@@ -6,21 +6,9 @@ let currentWeatherCard = document.getElementById("currentWeatherCard");
 let citySearch = document.getElementById("citySearch");
 let fiveCardDiv = document.getElementById("fiveCardDiv")
 let buttonRow = document.getElementById("dynamicBtns")
-let arrayOfCity = [];
 
-function deletels(){
-    let inls = Object.values(window.localStorage)
-    for (let i = 0; i < inls.length; i++) {
-        const findEmpty = inls[i];
-        if(findEmpty === ""){
-            localStorage.removeItem(findEmpty)
-        }
-    }
-}
-deletels()
 
 function pullFromLS(){
-    deletels()
     buttonRow.innerHTML = ""
     let lostArray = Object.values(window.localStorage)
     for (let i = 0; i < lostArray.length; i++) {
@@ -45,28 +33,12 @@ function pullFromLS(){
         blockDiv.appendChild(blockBtn)
         blockBtn.innerHTML = savedCityNam
         blockBtn.appendChild(deleteBtn)
-        
-        // if(lostArray.length < 3){
-        //     fiveCardDiv.setAttribute("style", "margin-top: 15px")
-        // }
-        // if(lostArray.length === 3){
-        //     fiveCardDiv.setAttribute("style", "margin-top: 0")
-        // }
-        // else if(lostArray.length > 3){
-        //     let marginNum = (lostArray.length  - 3) * -41
-        //     fiveCardDiv.setAttribute("style", "margin-top: " + marginNum + "px")
-        // }
-        // if(window.innerWidth < 900){
-        //     let marginNum = (lostArray.length  - 3) * 41
-        //     fiveCardDiv.setAttribute("style", "margin-top: " + marginNum + "px")
-        //     console.log("yes")
-        // }
-        console.log(window.innerWidth)
 
         deleteBtn.addEventListener("click", function(e){
             e.stopPropagation()
             localStorage.removeItem(savedCityNam.slice(0,3))
             pullFromLS()  
+            resize()
         })
         blockBtn.addEventListener("click", function(e){
             e.preventDefault()
@@ -76,6 +48,25 @@ function pullFromLS(){
     }}
     pullFromLS()
     
+function resize(){
+    let lostArray = Object.values(window.localStorage)
+    if(window.innerWidth > 900 && lostArray.length < 3){
+            fiveCardDiv.setAttribute("style", "margin-top: 15px")
+    }
+    else if(window.innerWidth > 900 && lostArray.length === 3  ){
+            fiveCardDiv.setAttribute("style", "margin-top: 0px")
+    }
+    else if(window.innerWidth > 900 && lostArray.length > 3  ){
+            let marginNum = (lostArray.length  - 3) * -41
+            fiveCardDiv.setAttribute("style", "margin-top: " + marginNum + "px")
+    }
+        
+    else if(window.innerWidth < 900){
+            fiveCardDiv.setAttribute("style", "margin-top: 0")
+    }
+
+}
+
     
 citySearch.addEventListener("click", function(event){
 event.preventDefault()
@@ -98,14 +89,10 @@ function renderTheWeather(savedCityNam){
     .then(res => res.json())
     .then(function(data){
 
-        let lostArray = Object.values(window.localStorage)
-        if(lostArray.length > 3 && window.innerWidth > 900){
-            // let marginNum = (lostArray.length  - 3) * -41
-            // fiveCardDiv.setAttribute("style", "margin-top: " + marginNum + "px")
+        resize()
+        window.onresize = function(){
+            resize()
         }
-        // else if(lostArray.length > 3 && window.innerWidth < 900){
-        //     fiveCardDiv.removeAttribute("style")
-        // }
 
         let cityName = data.name
         const icon = JSON.stringify(data.weather[0].icon).replace(/['"]+/g, '')
