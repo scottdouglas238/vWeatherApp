@@ -8,6 +8,11 @@ let fiveCardDiv = document.getElementById("fiveCardDiv")
 let buttonRow = document.getElementById("dynamicBtns")
 
 
+function deleteLoglevel(){
+    localStorage.removeItem("loglevel")
+}
+deleteLoglevel()
+
 function pullFromLS(){
     buttonRow.innerHTML = ""
     let lostArray = Object.values(window.localStorage)
