@@ -25,67 +25,73 @@ function pullFromLS(){
     let lostArray = Object.values(window.localStorage)
     for (let i = 0; i < lostArray.length; i++) {
         const savedCityNam = lostArray[i];
+        
+        //creating the node elements for the buttons
+        let blockDiv = document.createElement("div")
+        let blockBtn = document.createElement("button")
+        let deleteBtn = document.createElement("input")
+        
+        //setting the attributes for each created element
+        blockBtn.setAttribute("style", "text-align: left")
+        blockDiv.setAttribute("class", "d-grid gap-2")
+        blockBtn.setAttribute("class", "btn btn-outline-dark")
+        deleteBtn.setAttribute("id", "deleteButton")
+        deleteBtn.setAttribute("style", "text-align: right")
+        deleteBtn.setAttribute("type", "button")
+        deleteBtn.setAttribute("value", "x")
+        
+        //appending the created node elements to the page
+        buttonRow.appendChild(blockDiv)
+        blockDiv.appendChild(blockBtn)
+        blockBtn.innerHTML = savedCityNam
+        blockBtn.appendChild(deleteBtn)
+        
+        // if(lostArray.length < 3){
+        //     fiveCardDiv.setAttribute("style", "margin-top: 15px")
+        // }
+        // if(lostArray.length === 3){
+        //     fiveCardDiv.setAttribute("style", "margin-top: 0")
+        // }
+        // else if(lostArray.length > 3){
+        //     let marginNum = (lostArray.length  - 3) * -41
+        //     fiveCardDiv.setAttribute("style", "margin-top: " + marginNum + "px")
+        // }
+        // if(window.innerWidth < 900){
+        //     let marginNum = (lostArray.length  - 3) * 41
+        //     fiveCardDiv.setAttribute("style", "margin-top: " + marginNum + "px")
+        //     console.log("yes")
+        // }
+        console.log(window.innerWidth)
 
-    //creating the node elements for the buttons
-    let blockDiv = document.createElement("div")
-    let blockBtn = document.createElement("button")
-    let deleteBtn = document.createElement("input")
-
-    //setting the attributes for each created element
-    blockBtn.setAttribute("style", "text-align: left")
-    blockDiv.setAttribute("class", "d-grid gap-2")
-    blockBtn.setAttribute("class", "btn btn-outline-dark")
-    deleteBtn.setAttribute("id", "deleteButton")
-    deleteBtn.setAttribute("style", "text-align: right")
-    deleteBtn.setAttribute("type", "button")
-    deleteBtn.setAttribute("value", "x")
-
-    //appending the created node elements to the page
-    buttonRow.appendChild(blockDiv)
-    blockDiv.appendChild(blockBtn)
-    blockBtn.innerHTML = savedCityNam
-    blockBtn.appendChild(deleteBtn)
-
-    if(lostArray.length < 3){
-        fiveCardDiv.setAttribute("style", "margin-top: 15px")
-    }
-    if(lostArray.length === 3){
-        fiveCardDiv.setAttribute("style", "margin-top: 0")
-    }
-    else if(lostArray.length > 3){
-        let marginNum = (lostArray.length  - 3) * -41
-        fiveCardDiv.setAttribute("style", "margin-top: " + marginNum + "px")
-    }
-    deleteBtn.addEventListener("click", function(e){
-        e.stopPropagation()
-        localStorage.removeItem(savedCityNam.slice(0,3))
-        pullFromLS()  
-    })
-    blockBtn.addEventListener("click", function(e){
-        e.preventDefault()
-        renderTheWeather(savedCityNam)
-
-    })
-}}
-pullFromLS()
-
-
+        deleteBtn.addEventListener("click", function(e){
+            e.stopPropagation()
+            localStorage.removeItem(savedCityNam.slice(0,3))
+            pullFromLS()  
+        })
+        blockBtn.addEventListener("click", function(e){
+            e.preventDefault()
+            renderTheWeather(savedCityNam)
+            
+        })
+    }}
+    pullFromLS()
+    
+    
 citySearch.addEventListener("click", function(event){
-    event.preventDefault()
-    renderTheWeather()
+event.preventDefault()
+let userInput = document.getElementById('userInput').value
+parUserIn = (document.getElementById('userInput').value).slice(0,3)
+localStorage.setItem(parUserIn, userInput)
+renderTheWeather(userInput)
+
 })
 
 function renderTheWeather(savedCityNam){
     currentWeatherCard.innerHTML = ""
     fiveCardDiv.innerHTML = ""
     buttonRow.innerHTML = ""
-    parUserIn = (document.getElementById('userInput').value).slice(0,3) 
-    let userInput = document.getElementById('userInput').value
-    arrayOfCity = []
-    arrayOfCity.push(userInput||savedCityNam)
-    localStorage.setItem(parUserIn, userInput)
     pullFromLS()
-    fetch('https://api.openweathermap.org/geo/1.0/direct?q=' + arrayOfCity[0] +' &limit=10&appid=' + ApiKey)
+    fetch('https://api.openweathermap.org/geo/1.0/direct?q=' + savedCityNam +' &limit=10&appid=' + ApiKey)
     .then(res => res.json())
     .then(response => fetch('https://api.openweathermap.org/data/2.5/weather?lat=' + response[0].lat + '&lon=' + response[0].lon 
     + '&appid=' + ApiKey)
@@ -93,12 +99,15 @@ function renderTheWeather(savedCityNam){
     .then(function(data){
 
         let lostArray = Object.values(window.localStorage)
-        if(lostArray.length > 3){
-            let marginNum = (lostArray.length  - 3) * -41
-            fiveCardDiv.setAttribute("style", "margin-top: " + marginNum + "px")
+        if(lostArray.length > 3 && window.innerWidth > 900){
+            // let marginNum = (lostArray.length  - 3) * -41
+            // fiveCardDiv.setAttribute("style", "margin-top: " + marginNum + "px")
         }
+        // else if(lostArray.length > 3 && window.innerWidth < 900){
+        //     fiveCardDiv.removeAttribute("style")
+        // }
 
-        let cityName = data.name.toLowerCase()
+        let cityName = data.name
         const icon = JSON.stringify(data.weather[0].icon).replace(/['"]+/g, '')
         const temperature = (((data.main.temp - 273.15) * (9/5)) + 32).toFixed(1)
         const humidity = data.main.humidity
@@ -153,7 +162,7 @@ function renderTheWeather(savedCityNam){
         currentWeatherCard.appendChild(cardDiv)
         cardDiv.appendChild(cardBodyDiv)
         cardBodyDiv.appendChild(h3tag)
-        h3tag.appendChild(document.createTextNode(cityName.charAt(0).toUpperCase() + cityName.slice(1) + " "))
+        h3tag.appendChild(document.createTextNode(cityName))
         h3tag.appendChild(document.createTextNode("(" + today + ")"))
         h3tag.appendChild(imgtag)
         cardBodyDiv.appendChild(temperatureDiv)
@@ -224,15 +233,10 @@ function renderTheWeather(savedCityNam){
                 temperatureDiv.appendChild(humidityDiv)
                 humidityDiv.appendChild(document.createTextNode("Humidity: " + humidity + "%"))
                 inputField.value = ""
-            }
-            
+            } 
         }
     }))
     )
-    //put in right under here
-
-
-
 }
 // renderTheWeather()
 //----------------------------------------------------------------------------------------------------------------------------------------
