@@ -7,6 +7,7 @@ let citySearch = document.getElementById("citySearch");
 let fiveCardDiv = document.getElementById("fiveCardDiv")
 let buttonRow = document.getElementById("dynamicBtns")
 
+// console.log(window.sessionStorage.session)
 
 function deleteLoglevel(){
     localStorage.removeItem("loglevel")
@@ -44,6 +45,10 @@ function pullFromLS(){
             deleteLoglevel()
             e.stopPropagation()
             localStorage.removeItem(savedCityNam.slice(0,3))
+            if(savedCityNam === window.sessionStorage.session){
+                currentWeatherCard.innerHTML = ""
+                fiveCardDiv.innerHTML = ""
+            }
             pullFromLS()  
             resize()
         })
@@ -51,6 +56,8 @@ function pullFromLS(){
             e.preventDefault()
             deleteLoglevel()
             renderTheWeather(savedCityNam)
+            sessionStorage.removeItem("session")
+            sessionStorage.setItem("session", savedCityNam)
             
         })
     }}
@@ -75,12 +82,15 @@ function resize(){
 
 }
 
+
     
 citySearch.addEventListener("click", function(event){
 event.preventDefault()
 let userInput = document.getElementById('userInput').value
 parUserIn = (document.getElementById('userInput').value).slice(0,3)
 localStorage.setItem(parUserIn, userInput)
+sessionStorage.removeItem("session")
+sessionStorage.setItem("session", userInput)
 renderTheWeather(userInput)
 
 })
